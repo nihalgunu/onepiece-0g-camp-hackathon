@@ -1,6 +1,6 @@
 # OnePieceLabs-OG-CAMP-Hackathon
 
-# Usopp LLM Chatbot App using Federated Learning on 0p.ai
+# Usopp LLM Chatbot App using Federated Learning on 0G.ai
 
 ## Overview
 
@@ -63,7 +63,7 @@ This application is designed to manage user feedback efficiently by leveraging b
 ### Smart Contract
 
 1. **Deploy Smart Contract**:
-    Follow the instructions to deploy the smart contract to 0J.
+    Follow the instructions to deploy the smart contract to 0G.
 
 2. **Configure Contracts**:
     Update the Express server configuration with the deployed smart contract address and network details.
