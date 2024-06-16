@@ -1,0 +1,41 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/davidslakter/Documents/GitHub/OnePieceLabs-OG-CAMP-Hackathon/Contracts/contracts/DecentralizedLLMModel.sol": {
+      "lastModificationDate": 1718497013037,
+      "contentHash": "bbba2f6c7c3a1bea90a8bc1cc2b559b7",
+      "sourceName": "contracts/DecentralizedLLMModel.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.24"
+      ],
+      "artifacts": [
+        "DecentralizedLLMModel"
+      ]
+    }
+  }
+}

@@ -1,10 +1,16 @@
-async function main() {
-  const greeterABI = await ethers.getContractFactory("Greeter");
-  const greeter = await greeterABI.deploy("Hello, Hardhat!");
-  console.log("Greeter deployed at:", greeter.address);
+const { ethers } = require("hardhat");
 
-  const greet = await greeter.greet();
-  console.log("Greet value:", greet);
+async function main() {
+  const ContractABI = await ethers.getContractFactory("DecentralizedLLMModel");
+  const LLMContract = await ContractABI.deploy("SAMPLE WEIGHTS: 102938120938012");
+  console.log("Contract deployed at:", LLMContract.address);
+
+  const weights1 = await LLMContract.getWeights();
+  console.log("weights: ", weights1);
+
+  await LLMContract.updateWeights("New Weights: 213123123123")
+  const weights2 = await LLMContract.getWeights()
+  console.log("new weights: ", weights2);
 }
 
 main()
