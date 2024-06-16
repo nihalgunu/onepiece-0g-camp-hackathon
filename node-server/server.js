@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { BedrockRuntimeClient, InvokeModelCommand } = require('@aws-sdk/client-bedrock-runtime');
 const bodyParser = require('body-parser');
 const app = express();
@@ -13,6 +14,9 @@ const client = new BedrockRuntimeClient({ region: REGION });
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
+
+// Enable CORS for all routes
+app.use(cors());
 
 // Define a simple route
 app.get('/', (req, res) => {
@@ -50,7 +54,7 @@ assistant
     const command = new InvokeModelCommand({
       contentType: 'application/json',
       body: JSON.stringify(request),
-      accept:"application/json",
+      accept: "application/json",
       modelId: MODEL_ID,
     });
     const response = await client.send(command);
