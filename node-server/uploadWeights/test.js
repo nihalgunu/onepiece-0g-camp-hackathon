@@ -10,7 +10,7 @@ function delay(ms) {
 
 const upload = () => {
   async function run() {
-    const file = await NHFile.fromFilePath('./test.txt');
+    const file = await NHFile.fromFilePath('/Users/kabirdoshi/Downloads/Install League of Legends na (1).zip');
     const [tree, err] = await file.merkleTree();
     if (err === null) {
       console.log("File Root Hash: ", tree.rootHash());
@@ -48,7 +48,7 @@ const upload = () => {
 }
 
 async function download() {
-  const rootHash = '0x07fbbf129ee63fb90535e4fb935dd8cef0d5b8f5f353cb28f5bd558efc115f7a';
+  const rootHash = '0xf0a0a65e7f08080108fbc7d20146a711f81fd4fc1c15a78aa9950bfa2c7b66cf';
   const nhRpc = 'https://rpc-storage-testnet.0g.ai/';
   const nhProvider = new NHProvider(nhRpc);
   try {
@@ -59,6 +59,6 @@ async function download() {
   }
 }
 
-// upload();
-download();
+upload();
+// download();
 
