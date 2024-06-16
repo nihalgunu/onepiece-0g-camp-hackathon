@@ -15,7 +15,6 @@ const client = new BedrockRuntimeClient({ region: REGION });
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-// Enable CORS for all routes
 app.use(cors());
 
 // Define a simple route
@@ -44,8 +43,8 @@ assistant
   // Format the request payload using the model's native structure
   const request = {
     prompt,
-    max_gen_len: 10,  // Optional inference parameters
-    // temperature: 0.5,
+    max_gen_len: 50,  // Optional inference parameters
+    // temperature: 0.3,
     // top_p: 0.9,
   };
 
@@ -57,15 +56,30 @@ assistant
       accept: "application/json",
       modelId: MODEL_ID,
     });
-    const response = await client.send(command);
 
-    // Decode the native response body
-    const nativeResponse = JSON.parse(Buffer.from(response.body).toString('utf8'));
+    const randval = Math.floor(Math.random() * 3) + 1;
+    let response1, response2;
 
-    // Extract and send the generated text
-    const responseText = nativeResponse.generation;
-    console.log(responseText);
-    res.send({ result: responseText });
+    if (randval === 1) {
+      const responseA = await client.send(command);
+      const nativeResponseA = JSON.parse(Buffer.from(responseA.body).toString('utf8'));
+      const responseTextA = nativeResponseA.generation;
+      
+      const responseB = await client.send(command);
+      const nativeResponseB = JSON.parse(Buffer.from(responseB.body).toString('utf8'));
+      const responseTextB = nativeResponseB.generation;
+
+      response1 = responseTextA;
+      response2 = responseTextB;
+
+      res.send({ response1: responseTextA, response2: responseTextB });
+    } else {
+      const response = await client.send(command);
+      const nativeResponse = JSON.parse(Buffer.from(response.body).toString('utf8'));
+      const responseText = nativeResponse.generation;
+
+      res.send({ response1: responseText });
+    }
   } catch (err) {
     console.error(err, err.stack);
     res.status(500).send({ error: 'Error invoking Bedrock endpoint' });
