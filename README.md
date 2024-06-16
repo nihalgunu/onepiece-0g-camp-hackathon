@@ -1,6 +1,6 @@
 # OnePieceLabs-OG-CAMP-Hackathon
 
-# Feedback Management iOS Application
+# Usopp LLM Chatbot dApp using Federated Learning on 0p.ai
 
 ## Overview
 
