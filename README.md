@@ -25,7 +25,7 @@ This application is designed to manage user feedback efficiently by leveraging b
 - **iOS**: Swift-based app for capturing and uploading user feedback.
 - **Express Server**: Node.js server for processing feedback data.
 - **Blockchain**: Utilizes smart contracts and flow contracts for secure and decentralized feedback management.
-- **AWS Bedrock**: Utilized to host the llm model.
+- **AWS Bedrock & SageMaker**: Utilized to host the llm model.
 
 ## Installation and Setup
 
