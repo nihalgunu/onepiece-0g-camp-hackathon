@@ -1,61 +1,64 @@
 const zeroGDA = require('zerog-da-sdk');
 const ethers = require('ethers');
-require('dotenv').config()
+require('dotenv').config();
 const { NHProvider, NHFile, getFlowContract, TESTNET_FLOW_ADDRESS } = zeroGDA;
+
+// Function to create a delay
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 const upload = () => {
   async function run() {
-  const file = await NHFile.fromFilePath('./test.txt');
-  const [tree, err] = await file.merkleTree();
-  if (err === null) {
-    console.log("File Root Hash: ", tree.rootHash());
-  }  // how does it have a hash if we havent submitted to flow contract yet? 
+    const file = await NHFile.fromFilePath('./test.txt');
+    const [tree, err] = await file.merkleTree();
+    if (err === null) {
+      console.log("File Root Hash: ", tree.rootHash());
+    }  // how does it have a hash if we haven't submitted to flow contract yet? 
 
-  // create ethers signer from private key and rpc endpoint
-  const evmRpc = 'https://rpc-testnet.0g.ai/';
-  const provider = new ethers.JsonRpcProvider(evmRpc);
-  const privateKey = process.env.key; // with balance to pay for gas
-  const signer = new ethers.Wallet(privateKey, provider);
+    // create ethers signer from private key and rpc endpoint
+    const evmRpc = 'https://rpc-testnet.0g.ai/';
+    const provider = new ethers.JsonRpcProvider(evmRpc);
+    const privateKey = process.env.key; // with balance to pay for gas
+    const signer = new ethers.Wallet(privateKey, provider);
 
-  // get flow contract instance
-  const flowContract = getFlowContract(TESTNET_FLOW_ADDRESS, signer);
+    // get flow contract instance
+    const flowContract = getFlowContract('0xb8F03061969da6Ad38f0a4a9f8a86bE71dA3c8E7', signer);
 
-  const tagBytes = '0x';
-  const [submission, error] = await file.createSubmission(tagBytes);
-  if (error != null) {
+    const tagBytes = '0x';
+    const [submission, error] = await file.createSubmission(tagBytes);
+    if (error != null) {
       console.log('create submission error: ', error);
       return;
-  }
-  let tx = await flowContract.submit(submission);
-  await tx.wait();
-  console.log(tx.hash);
+    }
+    let tx = await flowContract.submit(submission);
+    await tx.wait();
+    console.log(tx.hash);
 
-  nhRpc = 'https://rpc-storage-testnet.0g.ai/';
-  const nhProvider = new NHProvider(nhRpc);
+    const nhRpc = 'https://rpc-storage-testnet.0g.ai/';
+    const nhProvider = new NHProvider(nhRpc);
 
-  await nhProvider.uploadFile(file);
+    do {
+      await nhProvider.uploadFile(file);
+      console.log("File upload attempt, waiting for 3 minutes for next one...");
+      await delay(180000);
+    } while (true);
   }
   run();
 }
 
 async function download() {
-  rootHash = '0x55a5c07da68124b81c9cec5522e6580d65c6555160e59f2d4e82e7471147ef3d';
-  txSequence = '0x5485e64d638060cf0a8372217f2bf33f00c419815c7eb4599e4b69a31ead4281';
-  // startIndex = 
-  // endIndex =
-  nhRpc = 'https://rpc-storage-testnet.0g.ai/';
+  const rootHash = '0x07fbbf129ee63fb90535e4fb935dd8cef0d5b8f5f353cb28f5bd558efc115f7a';
+  const nhRpc = 'https://rpc-storage-testnet.0g.ai/';
   const nhProvider = new NHProvider(nhRpc);
   try {
-    const txSeqNumber = ethers.BigNumber.from(txSequence).toNumber();
-    let x = await nhProvider.getFileInfoByTxSeq(txSequence);
-    console.log(x);
+    let x = await nhProvider.getFileInfo(rootHash);
+    console.log(x.tx);
   } catch (error) {
     console.error('Error:', error);
   }
-
-
-  // nhProvider.downloadSegment
-  
 }
 
+// upload();
 download();
+
