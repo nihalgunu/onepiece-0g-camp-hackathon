@@ -90,44 +90,38 @@ class ViewController: UIViewController {
 
         @objc private func sendButtonTapped() {
             guard let userInput = inputTextField.text, !userInput.isEmpty else { return }
-
-            networkManager.sendMessage(message: userInput)
-
             appendToChat(sender: "You", text: "\(userInput)")
             inputTextField.text = ""
             appendToChat(sender: "Bot", text: "Thinking...")
             sendButton.isEnabled = false
-            switch responseIndex {
-            case 0:
-                delayThenRespond("Hi, Im a decentralized model trained on the input of many users around the world! You can submit feedback in order to train me as well. How can I assist you today?")
-            case 1:
-                showFeedbackPopup()
-                delayThenRespond("2 + 2 is 4")
-            case 2:
-                showFeedbackPopup()
-                delayThenRespond("Hi im able to assist in any way I can")
-            case 3:
-                delayThenRespond("Hi im able to assist in any way I can")
-            case 4:
-                delayThenRespond("Hi im able to assist in any way I can")
-            case 5:
-                delayThenRespond("Hi im able to assist in any way I can")
-            default:
-                delayThenRespond("Hi im able to assist in any way I can")
+            networkManager.sendMessage(message: userInput) { [weak self] result in
+                DispatchQueue.main.async { [weak self] in
+                    if let result, let second_response = result.response2 {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        if let popUpVC = storyboard.instantiateViewController(withIdentifier: "popup") as? FeedbackVC {
+                            popUpVC.res1 = result.response1
+                            popUpVC.res2 = second_response
+                            popUpVC.onDismiss = { [weak self] res in
+                                self?.updateResponse(result: res)
+                            }
+                            self?.present(popUpVC, animated: true)
+                        }
+                        
+                    } else {
+                        self?.updateResponse(result: result?.response1)
+                    }
+                }
             }
-            
-            responseIndex += 1
         }
     
-        private func showFeedbackPopup(res1: String? = nil, res2: String? = nil) {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let popUpVC = storyboard.instantiateViewController(withIdentifier: "popup") as? FeedbackVC {
-                if let res1, let res2 {
-                    popUpVC.setResponses(res1, res2)
-                }
-                present(popUpVC, animated: true)
-                
+        private func updateResponse(result: String?) {
+            removeLineContaining(textToRemove: "Thinking...")
+            if let result {
+                printResponseWithDelay(response: result)
+            } else {
+                printResponseWithDelay(response: "Error: Unable to get response")
             }
+            sendButton.isEnabled = true
         }
     
         private func delayThenRespond(_ res: String) {
@@ -153,7 +147,7 @@ class ViewController: UIViewController {
                 if index == 0{
                     self.chatTextView.text = self.chatTextView.text + "Bot: " + String(character)
                 } else if index == response.count-1 {
-                    self.chatTextView.text = self.chatTextView.text + String(character) + "\n"
+                    self.chatTextView.text = self.chatTextView.text + String(character) + "...\n"
                 } else {
                     self.chatTextView.text = self.chatTextView.text + String(character)
                 }

@@ -86,6 +86,7 @@
                     <connections>
                         <outlet property="response1" destination="3G2-jm-liH" id="ifc-LU-Yhi"/>
                         <outlet property="response2" destination="MuS-ee-Wrm" id="o6f-Ob-JH7"/>
+                        <outlet property="toggler" destination="nnF-kz-bUa" id="K0e-aj-xfd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JPH-ml-8A6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

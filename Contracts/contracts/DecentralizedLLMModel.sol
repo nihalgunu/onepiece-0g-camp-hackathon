@@ -32,15 +32,15 @@ contract DecentralizedLLMModel {
 
     function updateWeights(string memory _newWeights) public {
         weights = _newWeights;
-        IFlow.Submission memory submission = IFlow.Submission({
-            nodes: nodes,
+        /*IFlow.Submission memory submission = IFlow.Submission({
+            nodes: [],
             heights: heights,
             sectorCount: sectorCount,
             epochNumber: epochNumber,
             userHash: userHash,
             workerAddress: workerAddress,
             age: age
-        });
+        });*/
         emit weightsUpdated(_newWeights, block.timestamp);
     }
 }

@@ -10,19 +10,26 @@ import UIKit
 
 class FeedbackVC: UIViewController {
     
+    @IBOutlet weak var toggler: UISegmentedControl!
     @IBOutlet weak var response1: UITextView!
     @IBOutlet weak var response2: UITextView!
     
+    var res1: String?
+    var res2: String?
+    
+    var onDismiss: ((String) -> Void)? = nil
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    func setResponses(_ res1: String, _ res2: String) {
+    override func viewDidAppear(_ animated: Bool) {
         response1.text = res1
         response2.text = res2
     }
 
     @IBAction func submitPressed(_ sender: Any) {
-        self.dismiss(animated: true)
+        onDismiss?(toggler.selectedSegmentIndex == 0 ? res1!: res2!)
+        self.dismiss(animated: true, completion: nil)
     }
 }

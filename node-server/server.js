@@ -44,7 +44,7 @@ assistant
   const request = {
     prompt,
     max_gen_len: 50,  // Optional inference parameters
-    // temperature: 0.3,
+    temperature: 0,
     // top_p: 0.9,
   };
 
