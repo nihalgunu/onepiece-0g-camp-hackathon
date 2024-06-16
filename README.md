@@ -1,6 +1,6 @@
 # OnePieceLabs-OG-CAMP-Hackathon
 
-# Usopp LLM Chatbot dApp using Federated Learning on 0p.ai
+# Usopp LLM Chatbot App using Federated Learning on 0p.ai
 
 ## Overview
 
