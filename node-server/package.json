@@ -7,8 +7,11 @@
     "start": "node test.js"
   },
   "dependencies": {
+    "@aws-sdk/client-bedrock": "^3.598.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.598.0",
     "dotenv": "^16.4.5",
     "ethers": "^6.13.0",
+    "express": "^4.19.2",
     "zerog-da-sdk": "^0.2.2"
   },
   "author": "Your Name",

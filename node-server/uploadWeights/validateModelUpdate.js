@@ -11,7 +11,7 @@ const contractABI = JSON.parse(fs.readFileSync('./contract.abi', 'utf8'));
 
 const provider = new ethers.JsonRpcProvider(evmRpc);
 
-const privateKey = process.env.key; // Your private key 
+const privateKey = process.env.key; 
 const signer = new ethers.Wallet(privateKey, provider);
 
 const contract = new ethers.Contract(contractAddress, contractABI, signer);
