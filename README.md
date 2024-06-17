@@ -1,4 +1,4 @@
-# OnePieceLabs-OG-CAMP-Hackathon
+# OnePieceLabs-OG-CAMP-Hackathon - {AI+WEB3 Track 2nd Place Winner}
 
 # Usopp LLM Chatbot App using Federated Learning on 0G.ai
 
